@@ -3,7 +3,12 @@ from . import views
 
 urlpatterns = [
     path('create/', views.CreateProfileView.as_view(), name='create-profile'),
-    path('profile/update/',views.UpdateProfileView.as_view(), name='update-profile'),
+    path('update/<str:pk>', views.UpdateProfileView.as_view(), name='update-profile'),
+    path('profile/<str:pk>/', views.ProfileView.as_view(), name='user-profile'),
+
+    path('lfg/', views.CreateLFGAlertView.as_view(), name='create-alert'),
+
+
 
     path("notes/", views.NoteListCreate.as_view(), name="note-list"),
     path("notes/delete/<int:pk>/", views.NoteDelete.as_view(), name="delete-note"),
@@ -12,11 +17,11 @@ urlpatterns = [
     #path('logout/', views.logoutView.as_view(), name='logout'),
     #path('register/', views.registerView.as_view(), name='register'),
     #
-    #path('profile/<str:pk>/', views.profileView.as_view(), name='user-profile'),
-    #path('update/<str:pk>', views.updateProfileView.as_view(), name='update-profile'),
+    #
+    #
 
     #path('', views.dashboardView, name='dashboard'),
-    #path('create/', views.createAlertView, name='create-alert'),
+    #
     #path('update/<str:pk>', views.updateAlertView, name='update-alert'),
     #path('delete/<str:pk>', views.deleteAlertView, name='delete-alert'),
     #path('match/', views.matchNotifyView, name='match-notify'),

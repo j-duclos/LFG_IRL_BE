@@ -109,7 +109,42 @@ class Profile(models.Model):
         return f'Your new balance is {self.coin_balance}'
 
 
+""" class CommonInfo(models.Model):
+	title = models.CharField(max_length=75)
+	pLeader = models.ForeignKey(User, on_delete=models.CASCADE)
+	#interest = models.CharField(max_length=30, choices=INTEREST_CHOICES)
+	#meetupTime = models.DateTimeField()
+	currentPartyCount = models.IntegerField()
+	neededPartyCount = models.IntegerField()
+	locationCity = models.CharField(max_length=50)
+	locationState = models.CharField(max_length=25)
+	locationZip = models.CharField(max_length=7)
+	partySpecifics = models.TextField()
 
+	class Meta:
+		abstract = True """
+
+#class LFGAlert(CommonInfo):
+class LFGAlert(models.Model):
+    """ fill out """
+
+    title = models.CharField(max_length=75)
+    #meetupAddress = models.TextField()
+    #invitesSent = models.IntegerField()
+
+    #invitesAccepted = models.IntegerField()
+    #invitesDeclined = models.IntegerField()
+    #inviteDetails = models.CharField()
+
+
+
+
+
+""" class Invite(CommonInfo):
+	
+    #invitedUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    status = models.CharField(max_length=25) """
+     
 
 
 

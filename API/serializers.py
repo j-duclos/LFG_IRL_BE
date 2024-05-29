@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Note, Profile, Interest, Schedule, Platform#, Gender
+from .models import Note, Profile, Interest, Schedule, Platform, LFGAlert#, Gender
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -94,6 +94,15 @@ class ProfileSerializer(serializers.ModelSerializer):
             instance.platform.add(platform)
 
         return instance
+
+
+class LFGAlertSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LFGAlert
+        fields = ['title']
+
+
+
 
 
 

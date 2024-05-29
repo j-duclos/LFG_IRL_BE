@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from rest_framework import generics
-from .serializers import UserSerializer, ProfileSerializer, NoteSerializer
+from .serializers import UserSerializer, ProfileSerializer, NoteSerializer, LFGAlertSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Note, Profile
+from .models import Note, Profile, LFGAlert
 
 
 #from django.contrib import messages
@@ -20,7 +20,6 @@ class CreateUserView(generics.CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-
 class CreateProfileView(generics.CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -29,11 +28,20 @@ class CreateProfileView(generics.CreateAPIView):
 class UpdateProfileView(generics.RetrieveUpdateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    lookup_field = 'pk'
     permission_classes = [IsAuthenticated]
 
-    def get_object(self):
-        # Assuming you want to update the profile of the currently authenticated user
-        return self.request.user.profile
+class ProfileView(generics.RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    lookup_field = 'pk'
+    permission_classes = [IsAuthenticated]
+
+class CreateLFGAlertView(generics.CreateAPIView):
+    queryset = LFGAlert.objects.all()
+    serializer_class = LFGAlertSerializer
+    permission_classes = [AllowAny] #[IsAuthenticated]
+
 
 
 
