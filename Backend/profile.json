@@ -1,0 +1,26 @@
+{
+  "username": 1,
+  "first_name": "John",
+  "last_name": "Doe",
+  "gamer_tag": "Gamer123",
+  "display_gamer_tag": true,
+  "age": 25,
+  "gender": "M",
+  "city": "New York",
+  "state": "NY",
+  "zip": 10001,
+  "bio": "I love gaming!",
+  "radius": 20,
+  "interest": [
+    {"name": "BG"},
+    {"name": "VG"}
+  ],
+  "schedule": [
+    {"free": "WE"},
+    {"free": "WD"}
+  ],
+  "platform": [
+    {"name": "PC"},
+    {"name": "PS"}
+  ]
+}
