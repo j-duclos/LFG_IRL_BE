@@ -99,7 +99,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 class LFGAlertSerializer(serializers.ModelSerializer):
     class Meta:
         model = LFGAlert
-        fields = ['title']
+        fields = '__all__'
 
 
 

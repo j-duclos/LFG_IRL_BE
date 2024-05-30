@@ -108,30 +108,27 @@ class Profile(models.Model):
         self.coin_balance -= amount
         return f'Your new balance is {self.coin_balance}'
 
-
-""" class CommonInfo(models.Model):
+class CommonInfo(models.Model):
 	title = models.CharField(max_length=75)
-	pLeader = models.ForeignKey(User, on_delete=models.CASCADE)
-	#interest = models.CharField(max_length=30, choices=INTEREST_CHOICES)
+	pLeader = models.ForeignKey(User, on_delete=models.CASCADE, default=1),
+	interest = models.CharField(max_length=30, choices=INTEREST_CHOICES, default='BG')
 	#meetupTime = models.DateTimeField()
-	currentPartyCount = models.IntegerField()
-	neededPartyCount = models.IntegerField()
-	locationCity = models.CharField(max_length=50)
-	locationState = models.CharField(max_length=25)
-	locationZip = models.CharField(max_length=7)
-	partySpecifics = models.TextField()
+	currentPartyCount = models.IntegerField(default=1)
+	neededPartyCount = models.IntegerField(default=1)
+	locationCity = models.CharField(max_length=50, default="")
+	locationState = models.CharField(max_length=25, default="")
+	locationZip = models.CharField(max_length=7, default=55555)
+	partySpecifics = models.TextField(blank=True)
 
 	class Meta:
-		abstract = True """
+		abstract = True
 
-#class LFGAlert(CommonInfo):
-class LFGAlert(models.Model):
+class LFGAlert(CommonInfo):
+#class LFGAlert(models.Model):
     """ fill out """
 
-    title = models.CharField(max_length=75)
-    #meetupAddress = models.TextField()
+    meetupAddress = models.TextField(blank=True)
     #invitesSent = models.IntegerField()
-
     #invitesAccepted = models.IntegerField()
     #invitesDeclined = models.IntegerField()
     #inviteDetails = models.CharField()

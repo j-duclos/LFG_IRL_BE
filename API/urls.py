@@ -7,6 +7,11 @@ urlpatterns = [
     path('profile/<str:pk>/', views.ProfileView.as_view(), name='user-profile'),
 
     path('lfg/', views.CreateLFGAlertView.as_view(), name='create-alert'),
+    path('update_lfg/<str:pk>', views.UpdateLFGAlertView.as_view(), name='update-alert'),
+    path('list_lfg/', views.ListLFGAlertView.as_view(), name='view-alerts'),
+    path('delete_lfg/<str:pk>', views.DeleteLFGAlert.as_view(), name='delete-alert'),
+
+
 
 
 
@@ -16,14 +21,9 @@ urlpatterns = [
     #path('login/', views.loginView.as_view(), name='login'),
     #path('logout/', views.logoutView.as_view(), name='logout'),
     #path('register/', views.registerView.as_view(), name='register'),
-    #
-    #
-    #
 
     #path('', views.dashboardView, name='dashboard'),
     #
-    #path('update/<str:pk>', views.updateAlertView, name='update-alert'),
-    #path('delete/<str:pk>', views.deleteAlertView, name='delete-alert'),
     #path('match/', views.matchNotifyView, name='match-notify'),
     #path('reply/', views.matchReplyView, name='match-reply'),
     #path('host_reply/', views.hostReplyView, name='host-reply'),

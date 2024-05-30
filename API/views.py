@@ -42,8 +42,26 @@ class CreateLFGAlertView(generics.CreateAPIView):
     serializer_class = LFGAlertSerializer
     permission_classes = [AllowAny] #[IsAuthenticated]
 
+class UpdateLFGAlertView(generics.RetrieveUpdateAPIView):
+    queryset = LFGAlert.objects.all()
+    serializer_class = LFGAlertSerializer
+    lookup_field = 'pk'
+    permission_classes = [AllowAny] #[IsAuthenticated]
+
+class ListLFGAlertView(generics.ListAPIView):
+    queryset = LFGAlert.objects.all()
+    serializer_class = LFGAlertSerializer
+    permission_classes = [AllowAny] #[IsAuthenticated]    
 
 
+class DeleteLFGAlert(generics.DestroyAPIView):
+    serializer_class = LFGAlertSerializer
+    permission_classes = [AllowAny] #[IsAuthenticated]  
+    lookup_field = 'pk'
+
+    """ def get_queryset(self):
+        user = self.request.user
+        return LFGAlert.objects.filter(pLeader=user) """
 
 
 
