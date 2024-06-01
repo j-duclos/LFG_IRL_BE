@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Note, Profile, Interest, Schedule, Platform, LFGAlert#, Gender
+from .models import Profile, Interest, Schedule, Platform, LFGAlert, Notification, Message #, Gender
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -36,8 +36,8 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        exclude = ('coin_balance',)
-        extra_kwargs = {"username": {"write_only": True}}
+        exclude = ('username', 'coin_balance')
+        #extra_kwargs = {"username": {"write_only": True}}
 
     def create(self, validated_data):
         interest_data = validated_data.pop('interest')
@@ -95,40 +95,52 @@ class ProfileSerializer(serializers.ModelSerializer):
 
         return instance
 
-
 class LFGAlertSerializer(serializers.ModelSerializer):
+    interest = InterestSerializer(many=True)
+
     class Meta:
         model = LFGAlert
         fields = '__all__'
 
-
-
-
-
-
-""" class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        #fields = '__all__'
-        exclude = ('coin_balance',)
-        extra_kwargs = {"username": {"write_only": True}}
-
     def create(self, validated_data):
-        print(validated_data)
-        profile = Profile.objects.create(**validated_data)
-        return profile """
+        interest_data = validated_data.pop('interest')
 
+        lfgalert = LFGAlert.objects.create(**validated_data)
 
+        for data in interest_data:
+            interest, created = Interest.objects.get_or_create(**data)
+            lfgalert.interest.add(interest)
 
+        return lfgalert
+    
+    def update(self, instance, validated_data):
+        interest_data = validated_data.pop('interest')
 
+        instance.title = validated_data.get('title', instance.title)
+        instance.pLeader = validated_data.get('pLeader', instance.pLeader)
+        instance.currentPartyCount = validated_data.get('currentPartyCount', instance.currentPartyCount)
+        instance.neededPartyCount = validated_data.get('neededPartyCount', instance.neededPartyCount)
+        instance.locationCity = validated_data.get('locationCity', instance.locationCity)
+        instance.locationState = validated_data.get('locationState', instance.locationState)
+        instance.locationZip = validated_data.get('locationZip', instance.locationZip)
+        instance.partySpecifics = validated_data.get('partySpecifics', instance.partySpecifics)
+        instance.meetupAddress = validated_data.get('meetupAddress', instance.meetupAddress)
+        instance.save()
 
+        instance.interest.clear()
+        for data in interest_data:
+            interest, created = Interest.objects.get_or_create(**data)
+            instance.interest.add(interest)
 
+        return instance
 
-
-
-
-class NoteSerializer(serializers.ModelSerializer):
+class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Note
-        fields = ["id", "title", "content", "created_at", "author"]
-        extra_kwargs = {"author": {"read_only": True}}
+        model = Notification
+        fields = '__all__'
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        read_only_fields = ['sender', 'timestamp', 'read']

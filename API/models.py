@@ -109,19 +109,19 @@ class Profile(models.Model):
         return f'Your new balance is {self.coin_balance}'
 
 class CommonInfo(models.Model):
-	title = models.CharField(max_length=75)
-	pLeader = models.ForeignKey(User, on_delete=models.CASCADE, default=1),
-	interest = models.CharField(max_length=30, choices=INTEREST_CHOICES, default='BG')
-	#meetupTime = models.DateTimeField()
-	currentPartyCount = models.IntegerField(default=1)
-	neededPartyCount = models.IntegerField(default=1)
-	locationCity = models.CharField(max_length=50, default="")
-	locationState = models.CharField(max_length=25, default="")
-	locationZip = models.CharField(max_length=7, default=55555)
-	partySpecifics = models.TextField(blank=True)
+    title = models.CharField(max_length=75)
+    pLeader = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    interest = models.ManyToManyField(Interest, related_name='lfg_alerts')
+    currentPartyCount = models.IntegerField(default=1)
+    neededPartyCount = models.IntegerField(default=1)
+    locationCity = models.CharField(max_length=50, default="")
+    locationState = models.CharField(max_length=25, default="")
+    locationZip = models.CharField(max_length=7, default=55555)
+    partySpecifics = models.TextField(blank=True)
+    #meetupTime = models.DateTimeField()
 
-	class Meta:
-		abstract = True
+    class Meta:
+        abstract = True
 
 class LFGAlert(CommonInfo):
 #class LFGAlert(models.Model):
@@ -133,28 +133,21 @@ class LFGAlert(CommonInfo):
     #invitesDeclined = models.IntegerField()
     #inviteDetails = models.CharField()
 
-
-
-
-
-""" class Invite(CommonInfo):
-	
-    #invitedUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=25) """
-     
-
-
-
-
-
-
-
-
-class Note(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notes")
+class Notification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification')
+    message = models.TextField()
+    created_at = models.DateField(auto_now_add=True)
+    read = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+         return f'Notification for {self.user.username}'
+    
+class Message(models.Model):
+     sender = models.ForeignKey(User, related_name='sent_messages', on_delete=models.CASCADE)
+     recipient = models.ForeignKey(User, related_name='received_messages', on_delete=models.CASCADE)
+     content = models.TextField()
+     timestamp = models.DateTimeField(auto_now_add=True)
+     read = models.BooleanField(default=False)
+
+     def __str__(self):
+          return f"Message from {self.send.username} to {self.recipient.username}"
